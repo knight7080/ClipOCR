@@ -1,0 +1,11 @@
+{
+    "name": "ClipOCR",
+    "version": "1.0.0",
+    "Description": "This is an extension to convert clipboard image from sniping tool to direct text and update it with clip board",
+    "manifest_version": 3,
+    "author": "Kaushik",
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "ClipOCR"
+    }
+}
