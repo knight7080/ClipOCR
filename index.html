@@ -1,18 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    body{
+        min-width: 360px;
+        height: 570px;
+        background-color: #000;
+    }
+    #container{
+        background-color: #000;
+    }
+
+
+
+    #inner-container{
+        background-color:  #333333;
+        min-width: 300px;
+        height: 530px;
+        border-radius: 20px;
+    }
+    
+    h2{
+        font: 20px Silkscreen;
+        color: #FF8C01;
+    }
+
+    .icon-contianer{
+        margin-left: 20px;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        background: #000;
+        
+    }
+</style>
 <head>
     <meta charset="UTF-8">
-    <script src='https://unpkg.com/tesseract.js@v2.0.0-alpha.13/dist/tesseract.min.js'></script>
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' cdnjs.cloudflare.com;"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <script src='node_modules\tesseract.js\dist\tesseract.min.js'></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
-    <button id="btn">read clipboard content</button>
-    <figure>
-    <figcaption>Copy this image</figcaption>
-    <img id = "image" />
-    <p id = "tfield"></p>
-    </figure>
+    <div id="container">
+        <h2>ClipOCR</h2>
+        <div id="inner-container">
+
+            <button id="btn">read clipboard content</button>
+            <!-- <div class="icon-contianer"><img id="btn" src="icons/clipboard.svg" /></div> -->
+            <figcaption>Copy this image</figcaption>
+            <!-- <img id = "image" /> -->
+            <ul id="list"></ul>
+        </div>
+
+    </div>
+    <ul id="list"></ul>
     <script type="module" src="clip.js"></script>
 </body>
 </html>

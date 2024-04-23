@@ -1,33 +1,49 @@
-// const T = require("tesseract.js");
-// import Tesseract from "tesseract.js";
-// import { createWorker } from "tesseract.js";
-
-
-let imageElemenet = document.getElementById('image');
+// let imageElemenet = document.getElementById('image');
 let textElement = document.getElementById("tfield");
-const copyList = [];
+let listElement = document.getElementById("list");
+let copyList = checkLocalStorage();
+const worker = await Tesseract.createWorker();
+listRefresh();
 
+
+
+// ill come to this in a bit.
 function checkLocalStorage(){
-  if(window.localStorage.getItem("copy-list")){
-    return 1;
+  //console.log(JSON.parse(window.localStorage.getItem("copy-list")).length);
+  if(JSON.parse(window.localStorage.getItem("copy-list"))){
+    return JSON.parse(window.localStorage.getItem("copy-list"));
   }
   else{
-    window.localStorage.setItem("copy-list", JSON.stringify(copyList));
-    return 1;
+    window.localStorage.setItem("copy-list", JSON.stringify([]));
+    return JSON.parse(window.localStorage.getItem("copy-list"));
   }
+  
 }
 
 
 async function convert(params) {
-    // await T.recognize(params, 'eng', {logger: e => console.log(e)}).then(out => console.log(out.data.text));
-    const worker = new Tesseract.TesseractWorker();
     worker.recognize(params,"eng").then(function(data){
-      console.log(data.text);
-      ;
+      console.log(data.data.text);
+      copyList.push(data.data.text);
+      console.log(copyList);
+      window.localStorage.setItem("copy-list", JSON.stringify(copyList));
+      listRefresh();
     });
 }
 
-document.getElementById('btn').onclick = async (evt) => {
+
+function listRefresh(){
+  listElement.innerHTML = "";
+  for(let i = 0; i < copyList.length; i++){
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode(copyList[i]));
+    listElement.appendChild(li);
+    
+  }
+}
+
+
+document.getElementById('btn').onclick = async (evt) => {``
     const auth = await navigator.permissions.query( { name: "clipboard-read" } );
     if( auth.state !== 'denied' ) {
       const item_list = await navigator.clipboard.read();
@@ -42,7 +58,7 @@ document.getElementById('btn').onclick = async (evt) => {
       );
       const file = item && await item.getType( image_type );
       let imageUrl = URL.createObjectURL(file);
-      imageElemenet.src = imageUrl;
+      // imageElemenet.src = imageUrl;
       convert(imageUrl);
     }
   };
